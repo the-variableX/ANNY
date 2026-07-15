@@ -22,13 +22,26 @@ It is a collection of functions that perform fundamental matrix operations like 
 
 ## Usage
 
-Load the ANNY Python file and call the required function.
+- Load the ANNY Python file and call the required function.
+  
+  Example:
+  
+  ```python
+  a = ref()
+  ```
+- The matrix input would be taken row wise. So use commas to separate elements of different columns in a row.
 
-Example:
+  Example:
 
-```python
-a = ref()
-```
+  ```python
+  your row1:1,0,0
+  your row2:0,1,0
+  your row3:0,0,1
+  matrix = [[1,0,0],
+            [0,1,0],
+            [0,0,1]]
+  ```
+  
 ## Requirements
 
 - Python 3.14
