@@ -34,12 +34,12 @@ It is a collection of functions that perform fundamental matrix operations like 
   Example:
 
   ```python
-  your row1:1,0,0
-  your row2:0,1,0
-  your row3:0,0,1
-  matrix = [[1,0,0],
-            [0,1,0],
-            [0,0,1]]
+  your row1:1,2,3
+  your row2:4,5,6
+  your row3:7,8,9
+  matrix = [[1,2,3],
+            [4,5,6],
+            [7,8,9]]
   ```
   
 ## Requirements
