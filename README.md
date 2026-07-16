@@ -6,6 +6,8 @@ A Python toolkit implementing fundamental linear algebra operations from scratch
 
 It is a collection of functions that perform fundamental matrix operations like row reduction, determinant computation, solving linear system of equations.
 
+This project was built for learning and understanding the implementation of linear algebra algorithms from first principles, without relying on external numerical libraries such as NumPy.
+
 ## Features
 
 - Basic matrix operations (addition, subtraction, multiplication)
@@ -17,19 +19,19 @@ It is a collection of functions that perform fundamental matrix operations like 
 - Linear system solver
 - Matrix determinant computation
 - Column space basis
-- Row space baies
+- Row space basis
 - Null space basis
 
 ## Usage
 
-- Load the ANNY Python file and call the required function.
+- Import the ANNY Python file and call the required function.
   
   Example:
   
   ```python
   a = ref()
   ```
-- The matrix input would be taken row wise. So use commas to separate elements of different columns in a row.
+- Matrices are entered row by row. Use commas to separate elements in a row.
 
   Example:
 
@@ -37,9 +39,14 @@ It is a collection of functions that perform fundamental matrix operations like 
   your row1:1,2,3
   your row2:4,5,6
   your row3:7,8,9
-  matrix = [[1,2,3],
-            [4,5,6],
-            [7,8,9]]
+
+  This would correspond to:
+  
+  matrix = [
+      [1,2,3],
+      [4,5,6],
+      [7,8,9]
+  ]
   ```
   
 ## Requirements
