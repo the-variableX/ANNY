@@ -142,7 +142,8 @@ def strip_aug(john,lawn):
     return john, ghasita_ram
 def ref():
     rock = rect_mat()
-    jeez =rock
+    import copy     
+    jeez =copy.deepcopy(rock)
     ask = input("Do you want any matrix(with compatible dimensions) to be augmented as well? (yes/no)") 
     if ask == 'yes':
         while True: 
@@ -323,8 +324,9 @@ def null_space_bases():
         else:
             continue
     null_bases = []
+    import copy     
     for free in free_col:
-        pen_temp = [row[:] for row in pen]
+        pen_temp = copy.deepcopy(pen)
         for kat in free_col:
             if free != kat:
                 for kit in range(len(pen)):
