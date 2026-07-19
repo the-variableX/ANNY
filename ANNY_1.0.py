@@ -121,97 +121,97 @@ def transpose():
     print('Here is your final matrix:')
     mat_print(transp_mat)
     return transp_mat
-def augment(motu, patlu):
-    jhatka = []
-    for flat in range(len(motu)):
-        jhatka_row = []
-        for pole in range(len(motu[0])):
-            jhatka_row.append(motu[flat][pole])
-        for stick in range(len(patlu[0])):
-            jhatka_row.append(patlu[flat][stick])
-        jhatka.append(jhatka_row)
-    return jhatka
-def strip_aug(john,lawn):
-    ghasita_ram = []
-    for hor in range(len(john)):
-        ghasita_ram_row = []
-        for ded in range(lawn):
-            val = john[hor].pop()
-            ghasita_ram_row.insert(0,val)
-        ghasita_ram.append(ghasita_ram_row)
-    return john, ghasita_ram
+def augment(matrix_1, matrix_2):
+    separate_marix = []
+    for row in range(len(matrix_1)):
+        separate_marix_row = []
+        for col in range(len(matrix_1[0])):
+            separate_marix_row.append(matrix_1[row][col])
+        for temp_col in range(len(matrix_2[0])):
+            separate_marix_row.append(matrix_2[row][temp_col])
+        separate_marix.append(separate_marix_row)
+    return separate_marix
+def strip_aug(augmented_matrix,col_right_matrix):
+    right_matrix = []
+    for row in range(len(augmented_matrix)):
+        right_matrix_row = []
+        for col in range(col_right_matrix):
+            val = augmented_matrix[row].pop()
+            right_matrix_row.insert(0,val)
+        right_matrix.append(right_matrix_row)
+    return augmented_matrix, right_matrix
 def ref():
-    rock = rect_mat()
+    input_matrix = rect_mat()
     import copy     
-    jeez =copy.deepcopy(rock)
+    original_matrix =copy.deepcopy(input_matrix)
     ask = input("Do you want any matrix(with compatible dimensions) to be augmented as well? (yes/no)") 
     if ask == 'yes':
         while True: 
-            sand = rect_mat()
-            if len(sand) != len(rock):
+            right_matrix = rect_mat()
+            if len(right_matrix) != len(input_matrix):
                 print('number of rows of both the matrices should be equal.')
             else:
                  break
     elif ask == 'no':
-        sand = []
-        for g in range(len(rock)):
-            sand.append([0])
-    aug = augment(rock, sand)
-    picol=0
-    pirow=0
+        right_matrix = []
+        for g in range(len(input_matrix)):
+            right_matrix.append([0])
+    augmented_matrix = augment(input_matrix, right_matrix)
+    piv_col=0
+    piv_row=0
     det_sign = 1
-    for ser_col in range(picol,len(rock[0])):
+    for search_column in range(piv_col,len(input_matrix[0])):
         found = False      
-        for ser_row in range(pirow,len(rock)): 
-            if aug[pirow][ser_col] == 0:
-                pivot_row = aug[pirow]               
-                if aug[ser_row][ser_col] !=0:
+        for search_row in range(piv_row,len(input_matrix)): 
+            if augmented_matrix[piv_row][search_column] == 0:
+                pivot_row = augmented_matrix[piv_row]               
+                if augmented_matrix[search_row][search_column] !=0:
                     found = True
-                    picol= ser_col
-                    aug[pirow] = aug[ser_row]
-                    aug[ser_row] = pivot_row
+                    piv_col= search_column
+                    augmented_matrix[piv_row] = augmented_matrix[search_row]
+                    augmented_matrix[search_row] = pivot_row
                     det_sign*= -1
                     break
-                elif aug[ser_row][ser_col] == 0:
+                elif augmented_matrix[search_row][search_column] == 0:
                     continue
             else:
                 found = True
-                picol= ser_col
+                piv_col= search_column
                 break
         if found:
-            for m in range(pirow+1,len(rock)):
-                if rock[pirow][picol] != 0:
-                    scalar = aug[m][picol]/aug[pirow][picol]
-                    for n in range(len(aug[0])):               
-                        aug[m][n] -= scalar*aug[pirow][n]    
-            pirow += 1
+            for m in range(piv_row+1,len(input_matrix)):
+                if input_matrix[piv_row][piv_col] != 0:
+                    scalar = augmented_matrix[m][piv_col]/augmented_matrix[piv_row][piv_col]
+                    for n in range(len(augmented_matrix[0])):               
+                        augmented_matrix[m][n] -= scalar*augmented_matrix[piv_row][n]    
+            piv_row += 1
         else:
             continue
-    return aug, len(sand[0]), det_sign, jeez
+    return augmented_matrix, len(right_matrix[0]), det_sign, original_matrix
 def row_reduction():
-    aug, lawn, _, jeez= ref()
-    for row in range(len(aug)-1,-1,-1):
-        for col in range(len(aug[0])-lawn):
-            if aug[row][col] == 0:
+    augmented_matrix, col_right_matrix, _, original_matrix= ref()
+    for row in range(len(augmented_matrix)-1,-1,-1):
+        for col in range(len(augmented_matrix[0])-col_right_matrix):
+            if augmented_matrix[row][col] == 0:
                 continue
             else:
-                piv = aug[row][col]
-                for t in range(len(aug[0])):
-                    aug[row][t] /= piv
-                for r in range(len(aug)):
-                    scale = aug[r][col]/aug[row][col]
-                    for s in range(len(aug[0])):
+                pivot_value = augmented_matrix[row][col]
+                for t in range(len(augmented_matrix[0])):
+                    augmented_matrix[row][t] /= pivot_value
+                for r in range(len(augmented_matrix)):
+                    scale = augmented_matrix[r][col]/augmented_matrix[row][col]
+                    for s in range(len(augmented_matrix[0])):
                         if r!= row:
-                            aug[r][s] -= scale*aug[row][s]
+                            augmented_matrix[r][s] -= scale*augmented_matrix[row][s]
                 break                       
-    rref, last_part = strip_aug(aug,lawn)
-    return rref, last_part, jeez
+    rref, right_matrix = strip_aug(augmented_matrix,col_right_matrix)
+    return rref, right_matrix, original_matrix
 def rank_nullity_internal(matrix):
     count = 0
-    for zerow in matrix:
+    for zero_row in matrix:
         counter = 0
-        for zecol in zerow:
-            if zecol == 0:
+        for zero_col in zero_row:
+            if zero_col == 0:
                 counter += 1
             else:
                 break
@@ -238,23 +238,23 @@ def inverse():
         print('The input matrix is not invertible.')
     return inverse
 def linear_system_solver():
-    apple, banana, _ = row_reduction()
-    _, nullity = rank_nullity_internal(apple)
+    rref, last_part, _ = row_reduction()
+    _, nullity = rank_nullity_internal(rref)
     if nullity == 0:
         print("The system of linear equations has a unique solution.")
         print('Solution ↴')
-        mat_print(banana)
+        mat_print(last_part)
     else:
         found = False
-        for knife in range(len(apple)-1,-1,-1):
+        for row in range(len(rref)-1,-1,-1):
             zero_count = 0
             non_zero_counter = 0
-            for gun in range(len(apple[0])):
-                if apple[knife][gun] == 0 and zero_count< len(apple[0])-1:
+            for col in range(len(rref[0])):
+                if rref[row][col] == 0 and zero_count< len(rref[0])-1:
                     zero_count +=1
                     continue
-                elif apple[knife][gun] == 0 and zero_count == len(apple[0])-1:
-                    if banana[knife][0] == 0:
+                elif rref[row][col] == 0 and zero_count == len(rref[0])-1:
+                    if last_part[row][0] == 0:
                         continue
                     else:
                         found = True
@@ -273,12 +273,12 @@ def linear_system_solver():
             else:
                 continue
 def determinant():
-    hamza, _, det = ref()
-    if len(hamza) == len(hamza[0]):
-        for ding in range(len(hamza)):
-            for dong in range(len(hamza[0])):
-                if ding == dong:
-                    det*= hamza[ding][dong]
+    ref_matrix, _, det = ref()
+    if len(ref_matrix) == len(ref_matrix[0]):
+        for row in range(len(ref_matrix)):
+            for col in range(len(ref_matrix[0])):
+                if row == col:
+                    det*= ref_matrix[row][col]
                 else:
                       continue
         print(f'Determinant  of your input rref = {det}')
@@ -286,39 +286,39 @@ def determinant():
         print('Determinant is possible only for square matrices and this is not one.')
     return det
 def column_space_bases():
-    alam, _, jeez = row_reduction()
+    rref, _, original_matrix = row_reduction()
     column_bases= []
-    for u in range(len(alam)):
+    for u in range(len(rref)):
         base_row = []
-        for v in range(len(alam[0])):
-            if alam[u][v] == 0:
+        for v in range(len(rref[0])):
+            if rref[u][v] == 0:
                 continue
             else:
-                for g in range(len(jeez)):
-                    base_row.append(jeez[g][v])
+                for g in range(len(original_matrix)):
+                    base_row.append(original_matrix[g][v])
                 break
         column_bases.append(base_row)
     print(f'The bases of column space of the input rref are: {column_bases}')
 def row_space_bases():
-    soda, _, _ = row_reduction()
-    rank, _ = rank_nullity_internal(soda)
+    rref, _, _ = row_reduction()
+    rank, _ = rank_nullity_internal(rref)
     row_bases = []
     for d in range(rank):
-        row_bases.append(soda[d])
+        row_bases.append(rref[d])
     print(f'The bases of row space of the input rref are: {row_bases}')
 def null_space_bases():
     print('You may refrain from appending the zero vector.')
-    pen, _, _ = row_reduction()
+    rref, _, _ = row_reduction()
     pivot_col = []
-    for row in range(len(pen)):
-        for column in range(len(pen[0])):
-            if pen[row][column] == 0:
+    for row in range(len(rref)):
+        for column in range(len(rref[0])):
+            if rref[row][column] == 0:
                 continue
             else:
                 pivot_col.append(column)
                 break
     free_col = []
-    for col in range(len(pen[0])):
+    for col in range(len(rref[0])):
         if col not in pivot_col:
            free_col.append(col)
         else:
@@ -326,19 +326,19 @@ def null_space_bases():
     null_bases = []
     import copy     
     for free in free_col:
-        pen_temp = copy.deepcopy(pen)
+        rref_temp = copy.deepcopy(rref)
         for kat in free_col:
             if free != kat:
-                for kit in range(len(pen)):
-                  pen_temp[kit][kat] = 0
+                for kit in range(len(rref)):
+                  rref_temp[kit][kat] = 0
             else:
                 continue
         basis = []
-        for coolie in range(len(pen[0])):
-            if free == coolie:
+        for col in range(len(rref[0])):
+            if free == col:
                 basis.append(1)
-            elif coolie in pivot_col:
-                basis.append(-1*pen_temp[pivot_col.index(coolie)][free])
+            elif col in pivot_col:
+                basis.append(-1*rref_temp[pivot_col.index(col)][free])
             else:
                 basis.append(0)
         null_bases.append(basis)
