@@ -32,9 +32,9 @@ def sq_mat():
                 print('Row size mismatch!')
                 continue             
     return mat_sq
-def mat_print(rref):
+def mat_print(matrix):
      print()
-     for p in rref:
+     for p in matrix:
          for q in p:
              print(q,end='   ')    
          print()
